@@ -105,3 +105,5 @@ Alright we have a post form here, so we can now shape our hydra command
 http-post-form = the type of attack to perform
 
  "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log&testcookie=1:Invalid" = Path of webiste, POST body information, fail conditions (txt)
+
+

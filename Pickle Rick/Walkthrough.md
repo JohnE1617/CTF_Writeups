@@ -73,14 +73,14 @@ Ingredient 2 = 1 jerry tear
 
 **PrivEsc**
  sudo -l
-Matching Defaults entries for www-data on
-    ip-10-10-95-19.eu-west-1.compute.internal:
-    env_reset, mail_badpass,
-    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
-
-User www-data may run the following commands on
+    Matching Defaults entries for www-data on
         ip-10-10-95-19.eu-west-1.compute.internal:
-    (ALL) NOPASSWD: ALL
+        env_reset, mail_badpass,
+        secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+    User www-data may run the following commands on
+            ip-10-10-95-19.eu-west-1.compute.internal:
+        (ALL) NOPASSWD: ALL
 
 
 well this is going to be easy

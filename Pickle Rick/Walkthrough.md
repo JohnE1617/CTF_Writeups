@@ -9,9 +9,9 @@ nmap -sC -sV -Pn -oN nmap_initial 10.10.233.219
 -Pn = no pings
 -oN output notation
 
-**Open Ports**
-Open 10.10.233.219:22
-Open 10.10.233.219:80
+**Open Ports**\n
+Open 10.10.233.219:22 \n
+Open 10.10.233.219:80\n
 
 
 **automated web enumeration**

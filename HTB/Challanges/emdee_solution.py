@@ -49,4 +49,7 @@ def get_flag(response):
     else:
         return print("something went wrong, please try again")
 
-get_flag(post_hash(address=address, req=req, hex_hash=hash_string(random_string=extract_string(response=get_page(address=address, req=req)))))
+try:
+    get_flag(post_hash(address=address, req=req, hex_hash=hash_string(random_string=extract_string(response=get_page(address=address, req=req)))))
+except Exception as e:
+    print(f"Something went wrong: {e}")

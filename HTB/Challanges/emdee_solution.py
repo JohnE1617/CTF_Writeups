@@ -4,14 +4,12 @@ import hashlib
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-p','--port', type=str, help='port to connect to')
-parser.add_argument('-u','--url',type=str, help='ip address to connect')
+parser.add_argument('-p','--port', type=str, help='port to connect to', nargs=1, required=True)
+parser.add_argument('-u','--url',type=str, help='ip address to connect', nargs=1, required=True)
 args = parser.parse_args()
-url = args.url
-port = args.port
 req = requests.session()
 
-address = 'http://' + url + ':' + port
+address = 'http://' + args.url + ':' + args.port
 
 def get_page(address, req):
     response = req.get(url=address)
